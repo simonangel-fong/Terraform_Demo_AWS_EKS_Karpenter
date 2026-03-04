@@ -146,10 +146,10 @@ resource "helm_release" "karpenter" {
   ]
 }
 
-resource "kubernetes_manifest" "karpenter_nodeClass" {
-  manifest = yamldecode(file("${path.module}/../manifest/karpenter_nodeClass.yaml"))
-}
+# resource "kubernetes_manifest" "karpenter_nodeClass" {
+#   manifest = yamldecode(file("${path.module}/../manifest/karpenter_nodeClass.yaml"))
+# }
 
-resource "kubernetes_manifest" "karpenter_nodePool" {
-  manifest = yamldecode(file("${path.module}/../manifest/karpenter_nodePool.yaml"))
-}
+# resource "kubernetes_manifest" "karpenter_nodePool" {
+#   manifest = yamldecode(file("${path.module}/../manifest/karpenter_nodePool.yaml"))
+# }
