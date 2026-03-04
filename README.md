@@ -1,28 +1,29 @@
-# Terraform_Demo_AWS_EKS_Karpenter
-A repo to learn EKS Karpenter
+# Terraform Demo: AWS EKS Karpenter
+
+A Terraform demo project of EKS Karpenter
 
 - ref: https://karpenter.sh/docs/
 
+[Set up](./docs/init.md)
 
-```sh
-helm upgrade --install karpenter oci://public.ecr.aws/karpenter/karpenter \
-  --version "v1.9" \
-  --namespace "karpenter" --create-namespace \
-  --set "settings.clusterName=eks-karpenter-demo" \
-  --set "settings.interruptionQueue=eks-karpenter-demo" \
-  --set controller.resources.requests.cpu=1 \
-  --set controller.resources.requests.memory=1Gi \
-  --set controller.resources.limits.cpu=1 \
-  --set controller.resources.limits.memory=1Gi \
-  --wait
+## Before Deployment
 
+- 0 pod
 
-aws ecr get-login-password --region ca-central-1 | docker login --username AWS --password-stdin 099139718958.dkr.ecr.ca-central-1.amazonaws.com
+![pic](./docs/pic/before_pod.png)
 
+- 1 node
 
-```
+![pic](./docs/pic/before_node.png)
 
-kubectl drain ip-10-0-18-119.ca-central-1.compute.internal --ignore-daemonsets --delete-emptydir-data
-kubectl drain ip-10-0-6-37.ca-central-1.compute.internal --ignore-daemonsets --delete-emptydir-data
-kubectl delete node ip-10-0-18-119.ca-central-1.compute.internal
-kubectl delete node ip-10-0-6-37.ca-central-1.compute.internal
+---
+
+## After Deployment
+
+- 10 pods
+
+![pic](./docs/pic/after_pod.png)
+
+- 10 nodes
+
+![pic](./docs/pic/after_node.png)

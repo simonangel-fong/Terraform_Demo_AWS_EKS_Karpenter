@@ -1,0 +1,21 @@
+apiVersion: karpenter.k8s.aws/v1
+kind: EC2NodeClass # control how EC2 node is launched
+metadata:
+  name: default
+spec:
+  # Specify AMI
+  amiSelectorTerms:
+    - alias: bottlerocket@latest
+  # match node_iam_role_name in karpenter
+  role: eks-karpenter-demo
+  # Specify subnet: match vpc subnet tag
+  subnetSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: eks-karpenter-demo
+  # Specify subnet: match security group
+  securityGroupSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: eks-karpenter-demo
+  # EC2 tag
+  tags:
+    karpenter.sh/discovery: eks-karpenter-demo

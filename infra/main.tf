@@ -126,7 +126,7 @@ resource "helm_release" "karpenter" {
   repository       = "oci://public.ecr.aws/karpenter"
   chart            = "karpenter"
   version          = "1.9.0"
-  namespace        = "kube-system"  # following the module karpenter default ns
+  namespace        = "kube-system" # following the module karpenter default ns
   create_namespace = false
   wait             = true
   timeout          = 600
@@ -144,4 +144,12 @@ resource "helm_release" "karpenter" {
       enabled: true
     EOT
   ]
+}
+
+resource "kubernetes_manifest" "karpenter_nodeClass" {
+  manifest = yamldecode(file("${path.module}/../manifest/karpenter_nodeClass.yaml"))
+}
+
+resource "kubernetes_manifest" "karpenter_nodePool" {
+  manifest = yamldecode(file("${path.module}/../manifest/karpenter_nodePool.yaml"))
 }
